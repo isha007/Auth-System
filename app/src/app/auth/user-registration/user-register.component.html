@@ -1,0 +1,94 @@
+<form (submit)="onRegister(RegisterForm)" #RegisterForm="ngForm">
+    <mat-card>
+        <h3>User Registration Form</h3>
+        <mat-form-field>
+            <input 
+            matInput 
+            type=email 
+            ngModel 
+            name="email" 
+            placeholder="E-Mail"
+            required
+            #email="ngModel"
+            email>
+            <mat-error *ngIf="email.invalid">Please enter correct email address</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input
+            matInput 
+            type=password 
+            ngModel 
+            name="password" 
+            placeholder="Password" 
+            required
+            minlength="7"
+            #password="ngModel">
+            <mat-hint align="end">Min length is 7</mat-hint>
+            <mat-error *ngIf="password.invalid">Please enter correct password</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input 
+            matInput 
+            type=text 
+            ngModel 
+            name="username" 
+            placeholder="Your Full Name" 
+            required
+            maxlength="100"
+            #username="ngModel">
+            <mat-hint align="end">Max length is 100</mat-hint>
+            <mat-error *ngIf="username.invalid">Please enter your full name</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input 
+            matInput
+            type=number 
+            placeholder="Your Mobile Number" 
+            required
+            ngModel
+            name="userPhoneNumber"
+            #userPhoneNumber="ngModel"
+            maxlength="10">
+            <mat-hint>Do not include area code</mat-hint>
+            <mat-error *ngIf="userPhoneNumber.invalid">Please enter your phone number</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input 
+            matInput 
+            type=text 
+            ngModel 
+            name="userAddress" 
+            placeholder="Your Address" 
+            required
+            maxlength="200"
+            #userAddress="ngModel">
+            <mat-hint align="end">Max length is 200</mat-hint>
+            <mat-error *ngIf="userAddress.invalid">Please enter your full name</mat-error>
+        </mat-form-field>
+        
+        <br/>
+        <br/>
+        <div>
+            <label>Level of access</label>
+            <br/><br/>
+            <mat-radio-group name="userType" ngModel #userType="ngModel">
+                <mat-radio-button value="staff">Staff</mat-radio-button><br/>
+              <mat-hint mat-small>Will have access to view/update the data</mat-hint><br/><br/>
+              <mat-radio-button value="admin">Admin</mat-radio-button><br/>
+              <mat-hint>Will have access to view/update/delete the data</mat-hint><br/><br/>
+              <mat-radio-button value="superUser">Super User</mat-radio-button><br/>
+              <mat-hint>Will have access to view/update/delete the data and create users</mat-hint><br/><br/>
+            </mat-radio-group>
+              
+            
+          </div>
+        <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit"
+        *ngIf="!isLoading">Register
+    </button>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </mat-card> 
+</form>
+

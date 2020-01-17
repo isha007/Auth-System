@@ -1,0 +1,63 @@
+
+
+<!--
+    [value]="" is known as property binding, can be used to output anything from typescript dynamically
+    #localReferenceName - now this whole content can be reference anywhere down the html
+
+<textarea row="5" [value]="newPost" #postInput></textarea>
+-->
+
+<!--
+    [()]="" - two way binding
+    is replacing property binding(setting value) and referencing(getting the value) 
+    ngModel is called directive
+-->
+
+<form (submit)="onCreateFunc(postForm)" #postForm="ngForm">
+    <mat-card>
+        <mat-form-field>
+            <input 
+            matInput 
+            type=text 
+            ngModel 
+            name="title" 
+            placeholder="Title" 
+            required
+            #title="ngModel">
+            <mat-error *ngIf="title.invalid">Please enter post title</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <textarea 
+            matInput 
+            row="6" 
+            ngModel 
+            name="content" 
+            placeholder="Post Content" 
+            required
+            #content="ngModel"></textarea>
+            <mat-error *ngIf="content.invalid">Please enter post content</mat-error>
+        </mat-form-field>
+        <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit">Save</button>
+    </mat-card> 
+</form>
+
+
+
+
+
+<!--
+    Event binding - (functionality)="listener function"
+-->
+
+
+<!--
+    {{any variable / method written inside the class PostCreateComponent}} - property
+-->
+
+<!--
+    {{ string interpolation }}
+<h3>Content:</h3><p>{{newPost}}</p>
+-->
