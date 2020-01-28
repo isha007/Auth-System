@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
 import { AuthData } from './auth-data.model';
-
-
+import { map } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class AuthService{
@@ -15,8 +14,35 @@ export class AuthService{
     private isAuthenticated = false;
     private tokenTimer: any;
     private userType: string;
+    private users: AuthData[] = [];
+    private usersUpdated = new Subject<AuthData[]>();
 
     constructor(private http: HttpClient, private router: Router) {}
+
+    getUsers() {
+        this.http.get<{messages: string, users: any}>('http://localhost:3000/api/user')
+        .pipe(map((userData) => {
+            return userData.users.map(user => {
+                return {
+                    id: user._id,
+                    username: user.username,
+                    email: user.email,
+                    password: user.password,
+                    userphonenumber: user.userphonenumber,
+                    useraddress: user.useraddress,
+                    usertype: user.usertype
+                };
+            });
+        }))
+        .subscribe((user)=>{
+            this.users = user;
+            this.usersUpdated.next([...this.users]);
+        });
+    }
+
+    getUserUpdateListener() {
+        return this.usersUpdated.asObservable();
+    }
 
     getToken() {
         return this.token;
@@ -36,12 +62,15 @@ export class AuthService{
 
     createUser(email: string, password: string, username: string,
          userphonenumber: number, useraddress: string, usertype: string){
-             const authData: AuthData = {email: email, password: password,
+             const authData: AuthData = {id: null, email: email, password: password,
                  username: username, userphonenumber: userphonenumber, useraddress: useraddress, usertype: usertype};
             this.http.post("http://localhost:3000/api/user/register", authData)
             .subscribe(response => {
                 console.log(response);
+            }, error => {
+                console.log(error);
             });
+            
     }
 
     login(email: string, password: string) {
@@ -126,5 +155,47 @@ export class AuthService{
             expirationDate: new Date(expirationDate),
             userType: userType
         }
+    }
+
+  
+    userDelete(userId: string){
+        
+        this.http.delete("http://localhost:3000/api/user/" + userId)
+        .subscribe(() => {
+            const updateUsers = this.users.filter(user=> user.id !== userId);
+            this.users = updateUsers;
+            this.usersUpdated.next([...this.users]);
+        });
+    }  
+
+    getUser(id: string) {
+        return this.http.get<{_id: string, username: string, email: string, password: string, useraddress: string, userphonenumber: number, usertype: string}>(
+            "http://localhost:3000/api/user/" + id);
+    }
+
+    updateUser(id: string, email: string, password: string, username: string, userphonenumber: number, useraddress: string, usertype: string) {
+        const user: AuthData = {
+            id: id,
+            email: email,
+            password: password,
+            username: username,
+            userphonenumber: userphonenumber,
+            useraddress: useraddress,
+            usertype: usertype
+                };
+        this.http.put("http://localhost:3000/api/user/" + id, user)
+        .subscribe(response => {
+            const updatedUser = [...this.users];
+            const oldUserIndex = updatedUser.findIndex(p => p.id === user.id);
+            // console.log("user.id: " + user.id);
+            // console.log("oldUserIndex: " + oldUserIndex);
+            // console.log("user: " + user);
+            updatedUser[oldUserIndex] = user;
+            this.users = updatedUser;
+            //console.log("this.users: " + this.users);
+            this.usersUpdated.next([...this.users]);    
+            this.router.navigate(["adminpage"]);
+        });        
+
     }
 }

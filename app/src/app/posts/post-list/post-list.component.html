@@ -6,7 +6,7 @@
             <p>{{ post.title }}</p>
         </mat-expansion-panel-header>
         <p>{{ post.content }}</p>
-        <mat-action-row *ngIf="userIsAuthenticated && userType == 'staff'">
+        <mat-action-row *ngIf="userIsAuthenticated && userType == 'admin'">
             <button mat-button color="primary">EDIT</button>
             
           </mat-action-row>

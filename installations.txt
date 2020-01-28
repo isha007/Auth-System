@@ -1,0 +1,5 @@
+installations
+
+1. npm install --save-dev nodemon
+2. npm install --save router
+3. npm install --save bcrypt

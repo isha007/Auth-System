@@ -1,0 +1,43 @@
+<mat-card>
+    
+   <h1 class="mat-headline">
+       User Administration
+   </h1>
+    
+   <mat-list>
+       <mat-list-item>
+        <span class="mat-title">
+            Authentication/Authorization
+        </span>
+       </mat-list-item>
+       <mat-list-item>    
+            <span class="heading2">
+                Roles/Responsibility
+            </span>
+            
+                <button mat-icon-button class="edit">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            
+            
+       </mat-list-item>
+   </mat-list>
+   <mat-spinner *ngIf="isLoading"></mat-spinner>
+   <mat-list *ngIf="!isLoading">
+        <mat-list-item>   
+        <span class="mat-title">
+            Users
+            <span class="spacer"></span>
+            <button mat-button color="primary" routerLink="/register"><mat-icon>add</mat-icon>Add User</button>
+        </span>
+        </mat-list-item>
+        
+        <mat-list-item *ngFor="let user of users">
+            <a href="#" class="heading2">{{ user.email }}</a>
+            <a mat-icon-button class="edit" [routerLink]="['/edit', user.id]"><mat-icon>edit</mat-icon></a>
+            <button mat-icon-button class="delete" (click)="onDeleteUser(user.id)"><mat-icon>delete</mat-icon></button>
+        </mat-list-item>
+        
+    
+   </mat-list>
+</mat-card>

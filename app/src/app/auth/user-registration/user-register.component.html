@@ -2,10 +2,11 @@
     <mat-card>
         <h3>User Registration Form</h3>
         <mat-form-field>
-            <input 
+            <input
+            
             matInput 
             type=email 
-            ngModel 
+            [ngModel]="user?.email" 
             name="email" 
             placeholder="E-Mail"
             required
@@ -17,7 +18,7 @@
             <input
             matInput 
             type=password 
-            ngModel 
+            [ngModel]="user?.password" 
             name="password" 
             placeholder="Password" 
             required
@@ -30,7 +31,7 @@
             <input 
             matInput 
             type=text 
-            ngModel 
+            [ngModel]="user?.username" 
             name="username" 
             placeholder="Your Full Name" 
             required
@@ -45,8 +46,8 @@
             type=number 
             placeholder="Your Mobile Number" 
             required
-            ngModel
-            name="userPhoneNumber"
+            [ngModel]="user?.userphonenumber"
+            name="userphonenumber"
             #userPhoneNumber="ngModel"
             maxlength="10">
             <mat-hint>Do not include area code</mat-hint>
@@ -56,8 +57,8 @@
             <input 
             matInput 
             type=text 
-            ngModel 
-            name="userAddress" 
+            [ngModel]="user?.useraddress"
+            name="useraddress" 
             placeholder="Your Address" 
             required
             maxlength="200"
@@ -71,12 +72,12 @@
         <div>
             <label>Level of access</label>
             <br/><br/>
-            <mat-radio-group name="userType" ngModel #userType="ngModel">
-                <mat-radio-button value="staff">Staff</mat-radio-button><br/>
+            <mat-radio-group name="usertype" [ngModel]="user?.usertype" #userType="ngModel">
+                <mat-radio-button value="student">Student</mat-radio-button><br/>
               <mat-hint mat-small>Will have access to view/update the data</mat-hint><br/><br/>
-              <mat-radio-button value="admin">Admin</mat-radio-button><br/>
+              <mat-radio-button value="system">System</mat-radio-button><br/>
               <mat-hint>Will have access to view/update/delete the data</mat-hint><br/><br/>
-              <mat-radio-button value="superUser">Super User</mat-radio-button><br/>
+              <mat-radio-button value="admin">Admin</mat-radio-button><br/>
               <mat-hint>Will have access to view/update/delete the data and create users</mat-hint><br/><br/>
             </mat-radio-group>
               
@@ -86,9 +87,10 @@
         mat-raised-button 
         color="primary" 
         type="submit"
-        *ngIf="!isLoading">Register
+        >Save
     </button>
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    
     </mat-card> 
 </form>
+
 

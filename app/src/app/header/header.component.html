@@ -1,21 +1,27 @@
 <mat-toolbar color="primary">
     <span> 
-        <a mat-button routerLink='/' routerLinkActive="acccent">HELP</a>
+        <a mat-button routerLink='/' routerLinkActive="mat-acccent">HELP</a>
     </span>
     <span class="fill-remaining-space"></span>
     
         <span *ngIf="userIsAuthenticated">
-        <a mat-button routerLink="/create" routerLinkActive="acccent">Post create</a>
+        <a mat-button routerLink="/create" routerLinkActive="mat-acccent">Post create</a>
         </span>
         <span *ngIf="userIsAuthenticated">
             <a mat-button routerLink="/postlist" routerLinkActive="acccent">Post list</a>
         </span>
+        <span *ngIf="userIsAuthenticated && userType == 'admin'">
+            <a mat-button routerLink="/adminpage" routerLinkActive="acccent">Admin Page</a>
+        </span>
     <span *ngIf="!userIsAuthenticated">
         <a mat-button routerLink="/login" routerLinkActive="acccent">Login</a>
     </span>
-    <span *ngIf="!userIsAuthenticated">   
+    <!--
+<span *ngIf="!userIsAuthenticated">   
         <a mat-button routerLink="/register" routerLinkActive="acccent">User Registration</a>
     </span>
+    -->
+    
     <span *ngIf="userIsAuthenticated">
         <button mat-button (click)="onLogout()">Logout</button>
     </span>

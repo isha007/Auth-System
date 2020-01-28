@@ -13,6 +13,11 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatIconModule, MatIcon} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatTableModule} from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
@@ -21,6 +26,7 @@ import { PostListComponent } from './posts/post-list/post-list.component';
 import { LoginComponent } from './auth/login/login.component';
 import { UserRegisterComponent } from './auth/user-registration/user-register.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { AdminPageComponent } from './auth/admin-page/admin-page.component';
 
 
 @NgModule({
@@ -30,7 +36,9 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     HeaderComponent,
     PostListComponent,
     LoginComponent,
-    UserRegisterComponent
+    UserRegisterComponent,
+    AdminPageComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -45,7 +53,12 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     HttpClientModule,
     MatProgressSpinnerModule,
     MatFormFieldModule,
-    MatRadioModule
+    MatRadioModule,
+    MatIconModule,
+    MatListModule,
+    MatGridListModule,
+    MatDialogModule,
+    MatTableModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

@@ -1,0 +1,6 @@
+mongo shell commands
+1. mongo "mongodb+srv://cluster0-5qped.mongodb.net/test"  --username isha
+2. To list all database present in the account: show dbs
+3. To select required db: use "dbname"
+4. To list out all collections in the selected db: show collections
+5. To list out all the documents in the reuired collectionName: db."collectionName".find()
