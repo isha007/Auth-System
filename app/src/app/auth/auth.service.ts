@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 import { AuthData } from './auth-data.model';
 import { map } from 'rxjs/operators';
@@ -38,6 +38,23 @@ export class AuthService{
             this.users = user;
             this.usersUpdated.next([...this.users]);
         });
+    }
+
+    getUserDataSource(): Observable<AuthData[]> {
+        return this.http.get<{messages: string, users: any}>('http://localhost:3000/api/user')
+        .pipe(map((userData) => {
+            return userData.users.map(user => {
+                return {
+                    id: user._id,
+                    username: user.username,
+                    email: user.email,
+                    password: user.password,
+                    userphonenumber: user.userphonenumber,
+                    useraddress: user.useraddress,
+                    usertype: user.usertype
+                };
+            });
+        }));
     }
 
     getUserUpdateListener() {
@@ -198,4 +215,5 @@ export class AuthService{
         });        
 
     }
+    
 }

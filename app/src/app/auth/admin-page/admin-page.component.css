@@ -2,8 +2,36 @@
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
+.heading{
+    font-weight: 500;
+    font-size: 14px;
+    padding-left: 23px;
+    color: rgba(68, 68, 68, 0.747);
+}
+
+.box1{
+    width:100%;
+    border-style:solid;
+    border-color:#ffffff;
+    padding-left: 6px;
+    padding-right: -10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    word-wrap: break-word;
+    background-color: rgb(169, 206, 241);
+}
+
+.box{
+    width:100%;
+    border-style:solid;
+    padding-left: 6px;
+    border-color:#ffffff;
+    word-wrap: break-word;
+    background-color: rgb(169, 206, 241);
+}
+
 .heading1{
-    color: rgb(54, 51, 51);
+    color: rgb(31, 31, 31);
     font-size: 120%;
     font-weight: 500;
 }
@@ -11,7 +39,18 @@
 .heading2{
     text-decoration: none;
     color: green;
+    padding-left: 23px;
     font-weight: 500;
+}
+
+.heading3{
+    text-align: center;
+}
+
+.heading4{
+    padding-left: 23px;
+    color: grey;
+    font-size: 14px;
 }
 
 mat-list-item{
@@ -20,7 +59,7 @@ mat-list-item{
 }
 
 .spacer {
-    flex: 1 1 auto;
+    flex: 1 0 auto;
 }
 
 button, .edit{
@@ -31,5 +70,9 @@ a, .delete{
     text-decoration: none;
     color:rgb(253, 108, 108);
 }
-
+a, .add{
+    margin: auto;
+    text-decoration: none;
+    color:rgba(86, 76, 231, 0.685);
+}
 

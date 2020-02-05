@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-
+import { DataSource } from '@angular/cdk/collections';
 
 import { AuthData } from '../auth-data.model';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { UserRegisterComponent } from '../user-registration/user-register.component';
+import { MatSort } from '@angular/material';
 
 
 @Component({
@@ -21,12 +22,16 @@ export class AdminPageComponent implements OnInit{
     userIsAuthenticated = false;
     userType: string;
     
-
+    dataSource = new UserDataSource(this.authService);
+    displayedColumns = ['email', 'usertype', 'edit', 'delete'];
+    @ViewChild(MatSort, {static: true}) sort: MatSort;
+    
 
     constructor(private authService: AuthService, public dialog: MatDialog) {}
 
     ngOnInit() {
-        
+        this.dataSource.sort = this.sort;
+        console.log("datasource: " + this.dataSource);
         this.isLoading = true;
         this.authService.getUsers();
         this.userType = this.authService.getUserType();
@@ -34,6 +39,7 @@ export class AdminPageComponent implements OnInit{
         .subscribe((users: AuthData[])=>{
             this.isLoading = false;
             this.users = users;
+            
         });
         this.userIsAuthenticated = this.authService.getIsAuth();
         this.authStatusSubs = this.authService
@@ -45,7 +51,6 @@ export class AdminPageComponent implements OnInit{
 
     }
 
-    
     ngOnDestroy() {
         this.usersSub.unsubscribe();
         this.authStatusSubs.unsubscribe();
@@ -69,4 +74,19 @@ export class AdminPageComponent implements OnInit{
     //       });
         
     // }
+}
+
+export class UserDataSource extends DataSource<any> {
+
+    @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+    constructor(private authService: AuthService) {
+        super();
+    }
+
+    connect(): Observable<AuthData[]> {
+        return this.authService.getUserDataSource();
+    }
+
+    disconnect() {}
 }

@@ -1,43 +1,46 @@
 <mat-card>
+    <h1 class="mat-headline heading3">User Administration</h1>
+    <p class="box1"><span class="heading">Authentication/Authorization</span></p>
+    <div><span class="heading2">Roles/Responsibility</span></div>
+    <p><span class="heading4">Student user - Access to training module</span></p>
+    <p><span class="heading4">System user - View and edit access to all modules except admin module</span></p>
+    <p><span class="heading4">Admin user - View, edit and delete access to all modules</span></p>
     
-   <h1 class="mat-headline">
-       User Administration
-   </h1>
+    <p class="box"><span class="heading">User</span>
+        <span class="spacer"></span>
+        &nbsp;
+        <span><button mat-button class="add" color="primary" routerLink="/register"><mat-icon>add</mat-icon>Add User</button></span>
+    </p>    
     
-   <mat-list>
-       <mat-list-item>
-        <span class="mat-title">
-            Authentication/Authorization
-        </span>
-       </mat-list-item>
-       <mat-list-item>    
-            <span class="heading2">
-                Roles/Responsibility
-            </span>
-            
-                <button mat-icon-button class="edit">
-                    <mat-icon>edit</mat-icon>
-                </button>
-            
-            
-       </mat-list-item>
-   </mat-list>
-   <mat-spinner *ngIf="isLoading"></mat-spinner>
-   <mat-list *ngIf="!isLoading">
-        <mat-list-item>   
-        <span class="mat-title">
-            Users
-            <span class="spacer"></span>
-            <button mat-button color="primary" routerLink="/register"><mat-icon>add</mat-icon>Add User</button>
-        </span>
-        </mat-list-item>
-        
-        <mat-list-item *ngFor="let user of users">
-            <a href="#" class="heading2">{{ user.email }}</a>
-            <a mat-icon-button class="edit" [routerLink]="['/edit', user.id]"><mat-icon>edit</mat-icon></a>
-            <button mat-icon-button class="delete" (click)="onDeleteUser(user.id)"><mat-icon>delete</mat-icon></button>
-        </mat-list-item>
-        
+    <mat-table class="" [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="email">
+            <mat-header-cell mat-header-cell *matHeaderCellDef class="heading2">Email Address</mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="usertype">
+            <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header class="heading2">User type</mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let user"> {{user.usertype|uppercase}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+            <mat-header-cell mat-header-cell *matHeaderCellDef class="heading2"></mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let user">
+                <a mat-icon-button class="edit" [routerLink]="['/edit', user.id]"><mat-icon>edit</mat-icon></a>  
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="delete">
+            <mat-header-cell mat-header-cell *matHeaderCellDef class="heading2"></mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let user">
+                <button mat-icon-button class="delete" (click)="onDeleteUser(user.id)"><mat-icon>delete</mat-icon></button>  
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
     
-   </mat-list>
+
 </mat-card>
+    
+   
+
+   
+   
